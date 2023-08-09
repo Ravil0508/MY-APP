@@ -1,0 +1,9 @@
+<header class="flex py-3 px-4 main-header">
+  <div class="card">
+    <app-logo></app-logo>
+  </div>
+  <div class="user-info">
+    <button class="pi pi-user" (click)="onProfile()"> {{ username }} </button>
+    <button class="pi pi-sign-out" (click)="onLogout()"> Выход </button>
+  </div>
+</header>

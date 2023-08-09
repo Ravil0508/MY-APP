@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  username = 'Имя пользователя';
 
+  onLogout() {
+    console.log("LogOut");
+  }
+
+  onProfile() {
+    console.log("User profile");
+  }
 }
