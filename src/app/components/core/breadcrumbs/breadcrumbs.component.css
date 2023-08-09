@@ -1,0 +1,12 @@
+.breadcrumb {
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: grey;
+  color: ghostwhite;
+}

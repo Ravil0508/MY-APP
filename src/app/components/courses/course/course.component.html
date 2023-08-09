@@ -1,0 +1,14 @@
+<p-card>
+  <div class="titleCourse">
+    <span>{{  course.title  }}</span>
+    <span class="pi pi-clock times">{{  course.duration  }} months</span>
+    <span class="pi pi-calendar times">{{  course.creationDate  }}</span>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="descrCourse">
+    <span>{{  course.description  }}</span>
+    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editCours()"></p-button>
+    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger course-button" (click)="deleteCours()"></p-button>
+    </div>
+  </ng-template>
+</p-card>
