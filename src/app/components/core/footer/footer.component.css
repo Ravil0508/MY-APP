@@ -1,7 +1,7 @@
 .main-footer {
 //background-color: var(--surface-200);
   background: #475569;
-  position:sticky ;
+  position:fixed;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -16,3 +16,4 @@ span {
   text-align: left;
 
 }
+

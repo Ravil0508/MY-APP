@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -6,13 +7,20 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  username = 'Имя пользователя';
+  @Output() public logoutEvent: EventEmitter<Event> = new EventEmitter<Event>();
+  @Input() public isAuthenticated: boolean = false;
+  @Input() public username: string = "";
+
+  constructor(private readonly authService: AuthService) { }
+
 
   ngOnInit() {
   }
 
   onLogout() {
     console.log("LogOut");
+    this.authService.logout();
+    this.logoutEvent.emit();
   }
 
   onProfile() {
