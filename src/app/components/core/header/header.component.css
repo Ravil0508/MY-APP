@@ -1,26 +1,16 @@
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: skyblue;
-  color: #fff;
-  margin: 10px;
-}
+.main-header {
+//background-color: var(--surface-200);
+  background: #F8FAFC;
+  box-shadow: 0px 20px 25px -5px #0000001A;
 
-.user-info {
-  display: flex;
-  align-items: center;
-  color: black;
 }
+span {
+  color: rgb(0, 0, 0);
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
 
-.username {
-  margin-right: 10px;
-}
-
-button {
-  background-color: transparent;
-  border: none;
-  color: black;
-  cursor: pointer;
 }

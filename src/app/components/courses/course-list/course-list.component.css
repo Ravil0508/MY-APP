@@ -1,0 +1,18 @@
+.body {
+  font-family: var(--font-family);
+  padding: 10px;
+  margin: 20px;
+}
+
+.courselist {
+  width: 1368px;
+  height: 368px;
+  top: 461px;
+  left: -102px;
+  background: linear-gradient(0deg, #E2E8F0, #E2E8F0),
+  linear-gradient(0deg, #9747FF, #9747FF);
+  border: 1px solid #9747FF;
+  justify-content: space-between;
+  align-items: center;
+}
+

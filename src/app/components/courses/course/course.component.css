@@ -1,10 +1,44 @@
-.course-button {
-  float: right;
+::ng-deep .p-card-body {
+  padding: 2rem !important;
+  background: #FFFFFF;
 }
 
-.times {
-  float: right;
-  padding: 10px;
+.h2{
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
+.des{
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
-.titleCourse {}
+.loading-icon-size {
+  font-size: 1.5em !important;
+}
+
+
+::ng-deep .is-new
+.p-card   {
+  border: 3px solid rgb(0, 255, 0);
+}
+
+
+::ng-deep .is-old
+
+.p-card {
+  border: 3px solid rgb(0, 0, 255);
+}
+
+::ng-deep .is-top
+.p-card-body   {
+  background: #EFF6FF;
+}

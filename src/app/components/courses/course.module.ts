@@ -1,29 +1,38 @@
 import {NgModule} from "@angular/core";
-import {AppComponent} from "../../app.component";
-import {HeaderComponent} from "../core/header/header.component";
-import {FooterComponent} from "../core/footer/footer.component";
-import {LogoComponent} from "../core/logo/logo.component";
-import {MycomponentComponent} from "../mycomponent/mycomponent.component";
 import {CourseComponent} from "./course/course.component";
 import {CourseListComponent} from "./course-list/course-list.component";
-import {BreadcrumbsComponent} from "../core/breadcrumbs/breadcrumbs.component";
-import {SearchComponent} from "../core/search/search.component";
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
-import {NgForOf} from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CommonModule } from '@angular/common';
+import { FilterPipe } from './pipes/filter.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
+import {CourseNewLineDirective} from "./directive/course-new-line.directive";
+import {CoursesComponent} from "./courses.component";
 
 @NgModule({
   declarations: [
+    CourseListComponent,
     CourseComponent,
-    CourseListComponent
+    DurationPipe,
+    OrderByPipe,
+    FilterPipe,
+    CourseNewLineDirective,
+    CoursesComponent
   ],
   imports: [
-    ButtonModule,
+    CommonModule,
     CardModule,
+    ButtonModule,
     InputTextModule,
-    NgForOf
+    FormsModule,
+    ConfirmDialogModule,
+    BreadcrumbModule
   ],
-  exports: [CourseComponent, CourseListComponent]
+  exports: [CourseComponent, CourseListComponent, CoursesComponent]
 })
 export class CourseModule {}
