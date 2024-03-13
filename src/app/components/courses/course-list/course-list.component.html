@@ -7,7 +7,7 @@
       <i class="pi pi-search"></i>
       <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="searchValue" />
       <p-button icon="pi pi-search" styleClass="p-button-lg" (click)="searchClick()"></p-button>
-      <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus "></p-button>
+      <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
     </span>
   <div *ngIf="show; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" ></app-course></ng-template>

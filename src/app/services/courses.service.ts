@@ -88,7 +88,7 @@ export class CoursesService {
     return this.courses
   }
 
-  public removeItem(id: number, data: Course[]): Course[] {
+  public removeItem(id: number | undefined, data: Course[]): Course[] {
     this.coursesNew = data.filter((item) => {return item.id != id});
     return this.coursesNew;
   }

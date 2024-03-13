@@ -3,6 +3,7 @@ import { Course} from "../../../model/course";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {FilterPipe} from "../pipes/filter.pipe";
 import {CoursesService} from "../../../services/courses.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-course-list',
@@ -21,6 +22,7 @@ export class CourseListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private filter: FilterPipe,
     private readonly coursesService: CoursesService,
+    private router: Router,
   ) {
 
   }
@@ -73,6 +75,10 @@ export class CourseListComponent implements OnInit {
 
   public editCourse(course: Course): void{
     console.log("id курса " +course.id);
+  }
+
+  addCourse(){
+    this.router.navigate(['/course-add']);
   }
 
   public deleteCourse(course: Course): void{
