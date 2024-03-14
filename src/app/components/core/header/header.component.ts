@@ -7,7 +7,7 @@ import {AuthService} from "../../../services/auth.service";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  @Output() public logoutEvent: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() public logoutEvent= new EventEmitter<string>();
   @Input() public isAuthenticated: boolean = false;
   @Input() public username: string = "";
 
@@ -19,8 +19,12 @@ export class HeaderComponent implements OnInit{
 
   onLogout() {
     console.log("LogOut");
-    this.authService.logout();
-    this.logoutEvent.emit();
+    this.logoutEvent.emit(this.username);
+  }
+
+  get isAuth():boolean{
+    this.username = this.authService.GetUserInfo();
+    return this.authService.isAuthenticated
   }
 
   onProfile() {

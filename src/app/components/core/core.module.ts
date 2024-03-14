@@ -11,6 +11,7 @@ import {AppRoutingModule} from "../../app-routing.module";
 import {ButtonModule} from "primeng/button";
 import { InputTextModule } from 'primeng/inputtext';
 import {CardModule} from "primeng/card";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 
@@ -21,7 +22,8 @@ import {CardModule} from "primeng/card";
     LogoComponent,
     MycomponentComponent,
     BreadcrumbsComponent,
-    SearchComponent
+    SearchComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,6 @@ import {CardModule} from "primeng/card";
     InputTextModule,
     CommonModule
   ],
-  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent]
+  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent]
 })
 export class CoreModule { }

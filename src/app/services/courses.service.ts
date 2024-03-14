@@ -76,7 +76,7 @@ export class CoursesService {
     return this.courses
   }
 
-  public createCourse(): Course[]{
+  public createCourse(course: Course): Course[]{
     return this.courses
   }
 
@@ -84,7 +84,21 @@ export class CoursesService {
     return this.courses
   }
 
-  public updateItem(): Course[]{
+  public updateItem(course: Course): Course[]{
+    const index = this.courses.findIndex(c => c.id === course.id);
+
+    // Если курс с заданным id найден
+    if (index !== -1) {
+      // Обновляем свойства курса
+      this.courses[index] = {
+        ...this.courses[index],
+        title: course.title,
+        creationDate: course.creationDate,
+        duration: course.duration,
+        description: course.description,
+        topRated: course.topRated!
+      };
+    }
     return this.courses
   }
 

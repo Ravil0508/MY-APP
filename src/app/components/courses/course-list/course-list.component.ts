@@ -3,7 +3,8 @@ import { Course} from "../../../model/course";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {FilterPipe} from "../pipes/filter.pipe";
 import {CoursesService} from "../../../services/courses.service";
-import {Router} from "@angular/router";
+import {NavigationExtras, Router} from "@angular/router";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-course-list',
@@ -22,6 +23,7 @@ export class CourseListComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private filter: FilterPipe,
     private readonly coursesService: CoursesService,
+    private authService: AuthService,
     private router: Router,
   ) {
 
@@ -50,11 +52,18 @@ export class CourseListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.coursesMenu = [
-      {label:'Курсы'}
-    ];
-    this.courses = this.coursesService.getList();
-    this.data = this.courses
+    if (this.authService.isAuthenticated) {
+      this.courses = this.coursesService.getList();
+      console.log("COURSES", this.courses);
+      this.data = this.courses;
+      this.coursesMenu = [
+        {label: 'Курсы', routerLink: '/courses', icon: 'pi pi-home'}
+      ];
+    } else {
+      console.log(this.authService.isAuthenticated);
+      console.log('go to login');
+      this.router.navigate(['/login']);
+    }
   }
 
   public loadCourse(): void{
@@ -74,11 +83,21 @@ export class CourseListComponent implements OnInit {
   }
 
   public editCourse(course: Course): void{
-    console.log("id курса " +course.id);
+    const extras: NavigationExtras = {
+      queryParams: {
+        id: course.id
+      },
+    };
+    this.router.navigate(['/courses/', course.id]);
+  }
+
+  getData(id: number): Course {
+    console.log("getData", id);
+    return this.coursesService.getList().filter((f) => f.id == id)[0]
   }
 
   addCourse(){
-    this.router.navigate(['/course-add']);
+    this.router.navigate(['/courses/new']);
   }
 
   public deleteCourse(course: Course): void{

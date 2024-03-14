@@ -10,6 +10,7 @@ export class AuthService {
   loginStr: string="";
   passwordStr: string="";
   localSt: string | null = "";
+  static isAuthenticated: boolean;
 
 
   constructor() {
@@ -27,7 +28,7 @@ export class AuthService {
   }
 
 
-  public logout()
+  public logout(login: string)
   {
     console.log("Выход "+ this.loginStr );
     localStorage.removeItem(this.loginStr);

@@ -1,4 +1,5 @@
 <app-header [username]="username" [isAuthenticated]="isAuthenticated" (logoutEvent)="logout($event)"></app-header>
-<app-auth *ngIf="!isAuthenticated" (loginEvent)="login($event)"></app-auth>
-<app-courses *ngIf="isAuthenticated"></app-courses>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
 <app-footer></app-footer>

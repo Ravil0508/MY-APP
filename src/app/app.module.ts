@@ -8,9 +8,10 @@ import {CourseModule} from "./components/courses/course.module";
 import {CoreModule} from "./components/core/core.module";
 import {AuthModule} from "./components/auth/auth.module";
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
