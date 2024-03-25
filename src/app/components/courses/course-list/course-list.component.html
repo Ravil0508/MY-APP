@@ -1,0 +1,6 @@
+<div class="flex flex-column gap-4">
+  <div class="flex justify-content-between align-items-center flex-wrap gap-4">
+    <app-course *ngFor="let course of courses" [course]="course" (editCourse)="editCourse(course)"  (deleteCourse)="deleteCourse(course)"></app-course>
+  </div>
+  <p-button (click)="loadMore()">load more</p-button>
+</div>

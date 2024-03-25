@@ -1,0 +1,22 @@
+.search {
+  width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: auto;
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  background-color: grey;
+  padding: 10px;
+}
+
+.p-inputtext-lg {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
+  height: 47px;
+}
+
+.addbutton {
+  float: right;
+}
