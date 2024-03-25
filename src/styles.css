@@ -1,4 +1,10 @@
-@import "primeicons/primeicons.css";/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
 .myBody {
-  background-color: palegreen;
+  Height: 1204px;
+  background: #E2E8F0;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
 }

@@ -22,8 +22,10 @@ import {CoreModule} from "./components/core/core.module";
     AppComponent
   ],
     imports: [
-        CourseModule,
-        CoreModule
+      BrowserModule,
+      AppRoutingModule,
+      CourseModule,
+      CoreModule
     ],
   providers: [],
   bootstrap: [AppComponent]

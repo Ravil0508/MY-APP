@@ -1,14 +1,11 @@
-<p-card>
-  <div class="titleCourse">
-    <span>{{  course.title  }}</span>
-    <span class="pi pi-clock times">{{  course.duration  }} months</span>
-    <span class="pi pi-calendar times">{{  course.creationDate  }}</span>
+<p-card [appCourseNewLine]="course" [ngClass]="{ 'is-top': course.topRated}">
+  <div class="grid">
+    <div class="col-9"><h2>{{course.title | uppercase}} <i *ngIf="course.topRated" class="pi pi-star-fill loading-icon-size" style="color: #fffb00"> </i></h2></div>
+    <div class="col-1"><i class="pi pi-clock" style="color: #81D4FA"></i> {{course.duration | duration}} </div>
+    <div class="col-2"><i class="pi pi-calendar" style="color: #81D4FA"></i> {{course.creationDate |  date: 'd MMMM y': '+3':'ru'}}</div>
   </div>
-  <ng-template pTemplate="footer">
-    <div class="descrCourse">
-    <span>{{  course.description  }}</span>
-    <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editCours()"></p-button>
-    <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text p-button-danger course-button" (click)="deleteCours()"></p-button>
-    </div>
-  </ng-template>
+  <div class="grid">
+    <div class="col-11 des">{{course.description}}</div>
+    <div class="col-1"><p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text" (click)="editCourse()" ></p-button> <p-button icon="pi pi-trash"  styleClass="p-button-rounded p-button-text p-button-danger"(click)="deleteCourse()"></p-button></div>
+  </div>
 </p-card>

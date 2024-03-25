@@ -1,0 +1,18 @@
+.main-footer {
+//background-color: var(--surface-200);
+  background: #475569;
+  position:sticky ;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+span {
+  color: white;
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+
+}
