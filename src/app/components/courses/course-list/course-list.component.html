@@ -11,6 +11,6 @@
     </span>
   <div *ngIf="show; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="deleteCourse(course)" ></app-course></ng-template>
-  <ng-template #elseBlock><h1 class="flex flex-wrap align-items-center justify-content-center">Нет данных для отображения</h1></ng-template>
+  <ng-template #elseBlock><h1 class="flex flex-wrap align-items-center justify-content-center">Ничего не найдено</h1></ng-template>
   <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse()"></p-button>
 </div>
