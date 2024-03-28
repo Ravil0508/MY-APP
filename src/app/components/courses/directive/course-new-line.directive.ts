@@ -22,11 +22,11 @@ export class CourseNewLineDirective implements AfterViewInit {
     console.log("directive");
 
     if (this.course.creationDate < this.currentDate && this.course.creationDate >= this.oldDate) {
-      this.renderer.setStyle(child, 'border', '3px solid rgb(0, 0, 255)'); // Синий цвет
+      this.renderer.setStyle(child, 'border', '3px solid rgb(0, 255, 0)'); // Зеленый цвет
     }
 
     if (this.course.creationDate > this.currentDate) {
-      this.renderer.setStyle(child, 'border', '3px solid rgb(0, 255, 0)'); // Зеленый цвет
+      this.renderer.setStyle(child, 'border', '3px solid rgb(0, 0, 255)'); // Синий цвет
     }
 
   }
