@@ -18,8 +18,9 @@ export class HeaderComponent implements OnInit{
   }
 
   onLogout() {
-    console.log("LogOut");
+    console.log("appcomponent header");
     this.logoutEvent.emit(this.username);
+    this.authService.isAuthenticated = false;
   }
 
   get isAuth():boolean{

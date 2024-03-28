@@ -28,6 +28,7 @@ export class AppComponent {
 
   logout(login: string)
   {
+    console.log("appcomponent appcomponent");
     this.auth.logout(login);
     this.router.navigate(['/login']);
     this.username = "";
