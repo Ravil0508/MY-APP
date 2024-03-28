@@ -12,6 +12,8 @@ import {ButtonModule} from "primeng/button";
 import { InputTextModule } from 'primeng/inputtext';
 import {CardModule} from "primeng/card";
 import { NotFoundComponent } from './not-found/not-found.component';
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import { NotFindComponent } from './not-find/not-find.component';
 
 
 
@@ -23,7 +25,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MycomponentComponent,
     BreadcrumbsComponent,
     SearchComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    NotFindComponent
   ],
   imports: [
     BrowserModule,
@@ -31,8 +34,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ButtonModule,
     CardModule,
     InputTextModule,
-    CommonModule
+    CommonModule,
+    BreadcrumbModule
   ],
-  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent]
+  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent, NotFindComponent]
 })
 export class CoreModule { }
