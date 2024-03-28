@@ -13,6 +13,11 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import {CourseNewLineDirective} from "./directive/course-new-line.directive";
 import {CoursesComponent} from "./courses.component";
+import { CourseAddComponent } from './course-add/course-add.component';
+import { AuthorComponent } from './author/author.component';
+import { DurationComponent } from './duration/duration.component';
+import {InputNumberModule} from "primeng/inputnumber";
+import {CalendarModule} from "primeng/calendar";
 
 @NgModule({
   declarations: [
@@ -22,7 +27,10 @@ import {CoursesComponent} from "./courses.component";
     OrderByPipe,
     FilterPipe,
     CourseNewLineDirective,
-    CoursesComponent
+    CoursesComponent,
+    CourseAddComponent,
+    AuthorComponent,
+    DurationComponent
   ],
   imports: [
     CommonModule,
@@ -31,8 +39,10 @@ import {CoursesComponent} from "./courses.component";
     InputTextModule,
     FormsModule,
     ConfirmDialogModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    InputNumberModule,
+    CalendarModule
   ],
-  exports: [CourseComponent, CourseListComponent, CoursesComponent]
+  exports: [CourseComponent, CourseListComponent, CoursesComponent, CourseAddComponent]
 })
 export class CourseModule {}
