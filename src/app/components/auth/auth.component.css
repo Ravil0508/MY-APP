@@ -1,0 +1,7 @@
+.logon {
+  padding: 0px 20px 35px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}

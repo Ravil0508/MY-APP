@@ -1,7 +1,7 @@
 <header class="py-3 px-4 main-header">
   <div class="grid">
-    <div class="col-10 "><app-logo></app-logo></div>
-    <div class="col-1 flex align-items-center"><span> <i class="pi pi-user" ></i> {{username}}</span></div>
-    <div class="col-1 flex align-items-center"><p-button label="Выход" styleClass=" p-button-text" icon="pi pi-sign-out"></p-button></div>
+    <div class="col-9 "><app-logo></app-logo></div>
+    <div class="col-2 flex align-items-center" *ngIf="isAuthenticated" ><span> <i class="pi pi-user" ></i> {{username}}</span></div>
+    <div class="col-1 flex align-items-center" *ngIf="isAuthenticated" ><p-button label="Выход" styleClass=" p-button-text" [link]="true" icon="pi pi-sign-out" (click)="onLogout()"></p-button></div>
   </div>
 </header>

@@ -10,7 +10,16 @@
       <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus "></p-button>
     </span>
   <div *ngIf="show; then thenBlock else elseBlock"></div>
-  <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="deleteCourse(course)" ></app-course></ng-template>
-  <ng-template #elseBlock><h1 class="flex flex-wrap align-items-center justify-content-center">Ничего не найдено</h1></ng-template>
+  <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" ></app-course></ng-template>
+  <ng-template #elseBlock><h1 class="flex flex-wrap align-items-center justify-content-center">Нет данных для отображения</h1></ng-template>
   <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse()"></p-button>
 </div>
+<p-confirmDialog #cd [style]="{width: '50vw'}">
+  <ng-template pTemplate="header" style="background-color: red; color: red; padding: 10px; text-align: center;">
+    <div>Удаление курса</div>
+  </ng-template>
+  <ng-template pTemplate="footer" style="background-color: lightblue; text-align: center;">
+    <button type="button" pButton icon="pi pi-times" label="Нет" (click)="cd.reject()" class="p-button p-button-success"></button>
+    <button type="button" pButton icon="pi pi-check" label="Да" (click)="cd.accept()" class="p-button p-button-danger"></button>
+  </ng-template>
+</p-confirmDialog>
