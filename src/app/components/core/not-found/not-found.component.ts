@@ -11,4 +11,8 @@ export class NotFoundComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  resetFilters() {
+    console.log('resetFilters');
+  }
 }

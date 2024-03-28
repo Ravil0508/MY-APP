@@ -18,6 +18,7 @@ import { AuthorComponent } from './author/author.component';
 import { DurationComponent } from './duration/duration.component';
 import {InputNumberModule} from "primeng/inputnumber";
 import {CalendarModule} from "primeng/calendar";
+import {CoreModule} from "../core/core.module";
 
 @NgModule({
   declarations: [
@@ -32,17 +33,18 @@ import {CalendarModule} from "primeng/calendar";
     AuthorComponent,
     DurationComponent
   ],
-  imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    FormsModule,
-    ConfirmDialogModule,
-    BreadcrumbModule,
-    InputNumberModule,
-    CalendarModule
-  ],
+    imports: [
+        CommonModule,
+        CardModule,
+        ButtonModule,
+        InputTextModule,
+        FormsModule,
+        ConfirmDialogModule,
+        BreadcrumbModule,
+        InputNumberModule,
+        CalendarModule,
+        CoreModule
+    ],
   exports: [CourseComponent, CourseListComponent, CoursesComponent, CourseAddComponent]
 })
 export class CourseModule {}

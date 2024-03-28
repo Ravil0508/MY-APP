@@ -30,7 +30,6 @@ export class AuthComponent implements OnInit {
     this.authService.login(this.login, this.password);
     this.authenticated =  this.authService.isAuthenticated;
     console.log( this.authService.isAuthenticated);
-    // this.loginEvent.emit();
     if (this.authenticated)
     {
       this.loginEvent.emit(this.login);
