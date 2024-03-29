@@ -1,15 +1,31 @@
 <div class="logon">
-  <p-card header="Авторизация" [style]="{ width: '400px' }" >
+  <p-card header="Вход" [style]="{ width: '400px' }"  >
     <div class="p-fluid">
-      <div class="p-field">
-        <div>Введите логин</div>
-        <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="login" laceholder="Логин*"/>
-      </div>
-      <div class="p-field">
-        <div>Введите пароль</div>
-        <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="password" laceholder="Пароль*"/>
-      </div>
+      <span>Email*</span>
+      <input
+        [(ngModel)]="login"
+        type="email"
+        pInputText
+        placeholder="Например user@domain.com"
+        style="margin: 10px 0"
+        required
+      />
     </div>
-    <p-button label="Вход" styleClass="p-button-outlined" (click)="loginAuth()"></p-button>
+    <div class="p-fluid">
+      <span>Пароль*</span>
+      <input
+        [(ngModel)]="password"
+        type="password"
+        pInputText
+        placeholder="Ваш пароль"
+        style="margin: 10px 0"
+        required
+      />
+    </div>
+    <div class="recovery">
+      <a href="#"> Забыли пароль? </a>
+      <button pButton label="Войти" type="submit" (click)="loginAuth()" ></button>
+    </div>
   </p-card>
 </div>
+

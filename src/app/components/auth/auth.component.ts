@@ -8,9 +8,15 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  @Output() public loginEvent: EventEmitter<Event> = new EventEmitter<Event>();
+  @Output() public loginEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private authService: AuthService ) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    )
+  {
+
+  }
 
   login: string ="";
   password: string ="";
@@ -22,8 +28,12 @@ export class AuthComponent implements OnInit {
   public loginAuth(){
     console.log( this.authService.isAuthenticated);
     this.authService.login(this.login, this.password);
+    this.authenticated =  this.authService.isAuthenticated;
     console.log( this.authService.isAuthenticated);
-    this.loginEvent.emit();
-
+    if (this.authenticated)
+    {
+      this.loginEvent.emit(this.login);
+      this.router.navigate(['/courses']);
+    }
   }
 }

@@ -1,3 +1,6 @@
+<div class="card py-2">
+  <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+</div>
 <div class="course">
   <p-card header="Добавление курса" [style]="{ width: '500px' }" >
     <div class="flex flex-column card-container m-2">
@@ -22,7 +25,7 @@
     </div>
     <div class="flex card-container m-2  ">
       <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()"></p-button>
-      <p-button label="Сохранить" (click)="save()"></p-button>
+      <p-button label="Сохранить" (click)="save(course)"></p-button>
     </div>
   </p-card>
 </div>
