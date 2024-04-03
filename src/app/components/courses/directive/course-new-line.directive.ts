@@ -21,11 +21,15 @@ export class CourseNewLineDirective implements AfterViewInit {
     const [child] = this.element.nativeElement.children;
     console.log("directive");
 
-    if (this.course.creationDate < this.currentDate && this.course.creationDate >= this.oldDate) {
+    let currentDate = new Date(this.currentDate);
+    let oldDate = new Date(this.oldDate);
+    let creationDate = new Date(this.course.creationDate);
+
+    if (creationDate < currentDate && creationDate >= oldDate) {
       this.renderer.setStyle(child, 'border', '3px solid rgb(0, 255, 0)'); // Зеленый цвет
     }
 
-    if (this.course.creationDate > this.currentDate) {
+    if (creationDate > currentDate) {
       this.renderer.setStyle(child, 'border', '3px solid rgb(0, 0, 255)'); // Синий цвет
     }
 

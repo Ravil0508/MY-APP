@@ -23,7 +23,6 @@ export class AppComponent {
   login(event: any){
     this.isAuthenticated = this.auth.isAuthenticated;
     this.auth.login;
-    this.username = this.auth.GetUserInfo();
   }
 
   logout(login: string)

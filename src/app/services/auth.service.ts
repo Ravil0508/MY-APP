@@ -1,4 +1,6 @@
 import {  Injectable,  } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -6,57 +8,47 @@ import {  Injectable,  } from '@angular/core';
 
 
 export class AuthService {
-  authenticated: boolean = false;
+  token: string = "";
+  passwordStr: string = "";
   loginStr: string="";
-  passwordStr: string="";
   localSt: string | null = "";
   static isAuthenticated: boolean;
+  private readonly usersUrl = 'http://localhost:3000/users';
 
 
-  constructor() {
+  constructor(private readonly httpClient: HttpClient) {
 
   }
 
 
-  public login(login:string, password:string)
-  {
-    console.log("Выполнен вход в систему");
+  public login(login: string, password: string): Observable<any> {
+    console.log("Попытка вход в систему");
     console.log(login + " " + password);
-    this.loginStr=login;
-    localStorage.setItem(login, password);
-
+    return this.httpClient.get(`${this.usersUrl}?email=${login}&password=${password}`)
   }
 
 
-  public logout(login: string)
-  {
-    console.log("Выход "+ this.loginStr );
-    localStorage.removeItem(this.loginStr);
+  public logout(login: string) {
+    console.log("Выход: " + login);
+    localStorage.removeItem('Token');
 
   }
 
   public get isAuthenticated (): boolean
   {
-    console.log("!!!isAuthenticated");
-    this.localSt=localStorage.getItem(this.loginStr);
-
-    if (this.localSt!){
-      this.authenticated = true;
-
-    }
-
-    return this.authenticated;
+    return !!localStorage.getItem('Token');
   }
 
-  public set isAuthenticated(t: boolean)
-  {
-    this.authenticated = t;
+  public GetUserInfo(): Observable<any> {
+    const token = localStorage.getItem('Token');
+    return this.httpClient.get(`${this.usersUrl}?token=${token}`)
   }
 
+  setToken(token: string) {
+    this.token = token
+  }
 
-
-  public GetUserInfo (): string
-  {
-    return  this.loginStr;
+  getToken(): string {
+    return this.token
   }
 }

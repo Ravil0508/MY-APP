@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef} from '@angular/core';
 import { Course } from 'src/app/model/course';
 import {CourseListComponent} from "../course-list/course-list.component";
 import {FilterPipe} from "../pipes/filter.pipe";
@@ -22,13 +22,17 @@ export class CourseAddComponent implements OnInit {
   };
 
   id = 0;
+  public title = "Добавление курса";
   public coursesMenu: MenuItem[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private courseList: CourseListComponent,
-              private courseService: CoursesService) {
+              private courseService: CoursesService,
+              private cdr: ChangeDetectorRef
+  ) {
+    console.log("constructor constructor");
     activatedRoute.params.subscribe(params => this.id = params['id']);
+    console.log("constructor constructor", this.id);
   }
 
   ngOnInit(): void {
@@ -36,18 +40,22 @@ export class CourseAddComponent implements OnInit {
       { label: ' Курсы', routerLink: '/courses', icon: 'pi pi-home' },
     ]
     if (this.id > 0) {
-      let course = this.courseList.getData(this.id);
+      this.title = "Редактирование курса";
+      this.courseService.getCourseById(this.id).subscribe(
+        (course) => {
+          this.coursesMenu.push({ label: course.title });
+          this.course = {
+            title: course.title,
+            creationDate: new Date(course.creationDate),
+            duration: course.duration,
+            description: course.description,
+          }
+          this.cdr.detectChanges();
+        });
+    }
+    else {
+      this.coursesMenu.push({ label: 'Новый курс' });
 
-      this.coursesMenu.push({ label: course.title });
-
-
-      this.course = {
-        id: course.id,
-        title: course.title,
-        creationDate: new Date(course.creationDate),
-        duration: course.duration,
-        description: course.description,
-      }
     }
   }
 
@@ -57,12 +65,25 @@ export class CourseAddComponent implements OnInit {
   }
 
   save(course: Course){
-    console.log("COURSE", course.id);
-    if(course.id) {
-      console.log("save course")
-      this.courseService.updateItem(course)
-    } else {
-      this.courseService.createCourse(course)
+    let courseForm = {
+      id: this.id,
+      title: this.course.title,
+      creationDate: this.course.creationDate,
+      duration: this.course.duration,
+      description: this.course.description,
+    }
+
+    if (this.id > 0) {
+      this.courseService.updateCourse(courseForm).subscribe(
+        (result) => {
+          console.log("Успешно изменили");
+        });
+    }
+    else {
+      this.courseService.createCourse(courseForm).subscribe(
+        (result) => {
+          console.log("Успешно добавили");
+        });
     }
     this.router.navigate(['/courses']);
   }

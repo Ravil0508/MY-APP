@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-duration',
@@ -8,10 +8,15 @@ import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core
 })
 export class DurationComponent implements OnInit {
   @Input() public duration: number = 0;
+  @Output() durationChange = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  valueDec(event: any) {
+    this.durationChange.emit(this.duration);
   }
 
 }

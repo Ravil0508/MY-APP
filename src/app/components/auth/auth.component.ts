@@ -26,14 +26,17 @@ export class AuthComponent implements OnInit {
   }
 
   public loginAuth(){
-    console.log( this.authService.isAuthenticated);
-    this.authService.login(this.login, this.password);
-    this.authenticated =  this.authService.isAuthenticated;
-    console.log( this.authService.isAuthenticated);
-    if (this.authenticated)
-    {
-      this.loginEvent.emit(this.login);
-      this.router.navigate(['/courses']);
-    }
+    this.authService.login(this.login, this.password).subscribe(
+      (user: any) => {
+        if (user[0]) {
+          console.log("Пользователь найден");
+          localStorage.setItem('Token', user[0].token);
+          this.router.navigate(['/courses']);
+        }
+      },
+      (err) => {
+          console.log(err)
+      }
+    );
   }
 }

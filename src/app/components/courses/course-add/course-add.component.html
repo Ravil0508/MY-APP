@@ -2,7 +2,7 @@
   <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
 </div>
 <div class="course">
-  <p-card header="Добавление курса" [style]="{ width: '500px' }" >
+  <p-card header="{{title}}" [style]="{ width: '500px' }" >
     <div class="flex flex-column card-container m-2">
       <div>Наименование*</div>
       <input type="text" pInputText [(ngModel)]="course.title" />
@@ -13,11 +13,11 @@
     </div>
     <div class="flex flex-column card-container m-2">
       <div>Продолжительность*</div>
-      <app-duration [duration]="course.duration"> </app-duration>
+      <app-duration [(duration)]="course.duration"></app-duration>
     </div>
     <div class="flex flex-column card-container m-2">
       <div>Дата*</div>
-      <p-calendar [(ngModel)]="course.creationDate" [showIcon]="true"></p-calendar>
+      <p-calendar [(ngModel)]="course.creationDate" [showIcon]="true" dateFormat="dd.mm.yy"></p-calendar>
     </div>
     <div class="flex flex-column card-container m-2">
       <div>Авторы*</div>

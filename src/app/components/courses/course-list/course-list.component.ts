@@ -1,10 +1,11 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, Output} from '@angular/core';
 import { Course} from "../../../model/course";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {FilterPipe} from "../pipes/filter.pipe";
 import {CoursesService} from "../../../services/courses.service";
 import {NavigationExtras, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-course-list',
@@ -13,11 +14,12 @@ import {AuthService} from "../../../services/auth.service";
   providers: [ FilterPipe,  ConfirmationService ]
 })
 export class CourseListComponent implements OnInit {
-  public courses: Course[] = [];
+  public courses$: Observable<Course[]> = this.coursesService.getCoursesList();
   public coursesMenu: MenuItem[] = [];
   public data: Course[] = [];
   searchValue: string = "";
   show: boolean = true;
+  page: number = 1;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -25,6 +27,7 @@ export class CourseListComponent implements OnInit {
     private readonly coursesService: CoursesService,
     private authService: AuthService,
     private router: Router,
+    private cdr: ChangeDetectorRef
   ) {
 
   }
@@ -52,22 +55,21 @@ export class CourseListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.authService.isAuthenticated) {
-      this.courses = this.coursesService.getList();
-      console.log("COURSES", this.courses);
-      this.data = this.courses;
-      this.coursesMenu = [
-        {label: 'Курсы', routerLink: '/courses', icon: 'pi pi-home'}
-      ];
-    } else {
-      console.log(this.authService.isAuthenticated);
-      console.log('go to login');
-      this.router.navigate(['/login']);
-    }
+    this.coursesMenu = [
+      { label: ' Курсы', routerLink: '/courses', icon: 'pi pi-home' },
+    ];
+    this.getData();
   }
 
   public loadCourse(): void{
     console.log("Загрузка курсов");
+    this.page += 1;
+    this.coursesService.getCoursesList(this.page).subscribe(
+      (result) => {
+        result.map((x) => {
+          this.data.push(x)
+        })
+      });
   }
 
   public selectCourse(course: Course): void{
@@ -75,11 +77,19 @@ export class CourseListComponent implements OnInit {
   }
 
   public searchClick(): void{
-
-    console.log("this.searchValue", this.searchValue);
-    this.data = this.filter.transform(this.courses, this.searchValue);
-    this.show = this.data.length != 0;
-    console.log("this.searchValue", this.data);
+    this.coursesService.searchCourses(this.searchValue).subscribe(
+      (result) => {
+        this.data = result;
+        this.cdr.detectChanges();
+      },
+      (error) => { console.log(error)},
+      () => {
+        if(this.data.length == 0) {
+          this.show = false;
+        } else {
+          this.show = true;
+        }
+      });
   }
 
   public editCourse(course: Course): void{
@@ -91,9 +101,11 @@ export class CourseListComponent implements OnInit {
     this.router.navigate(['/courses/', course.id]);
   }
 
-  getData(id: number): Course {
-    console.log("getData", id);
-    return this.coursesService.getList().filter((f) => f.id == id)[0]
+  getData() {
+    this.coursesService.getCoursesList().subscribe(
+      (result) => {
+        this.data = result;
+      });
   }
 
   addCourse(){
@@ -101,9 +113,13 @@ export class CourseListComponent implements OnInit {
   }
 
   public deleteCourse(course: Course): void{
-    console.log("id курса " +course.id);
-    this.courses = this.coursesService.removeItem(course.id, this.data);
-    this.data = this.courses;
+    console.log("ID курса " + course.id);
+    this.coursesService.deleteCourse(course.id!).subscribe(
+      (result) => {
+        console.log("Успешно удалили");
+        this.getData();
+        this.page = 1;
+      });
   }
 
   confirmDeleteCourse(course: Course) {
@@ -115,6 +131,13 @@ export class CourseListComponent implements OnInit {
       accept: () => this.deleteCourse(course),
     });
     console.log("удаление2");
+  }
+
+  resetFilters() {
+    console.log('resetFilters');
+    this.searchValue = "";
+    this.show = true;
+    this.getData();
   }
 
   protected readonly Output = Output;
