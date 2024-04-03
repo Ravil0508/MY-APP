@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
 
 @Component({
@@ -10,25 +10,42 @@ export class HeaderComponent implements OnInit{
   @Output() public logoutEvent= new EventEmitter<string>();
   @Input() public isAuthenticated: boolean = false;
   @Input() public username: string = "";
+  getUserFlag = false;
 
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService,
+              private cdr: ChangeDetectorRef
+  ) { }
 
 
   ngOnInit() {
   }
 
   onLogout() {
-    console.log("appcomponent header");
     this.logoutEvent.emit(this.username);
-    this.authService.isAuthenticated = false;
+    this.getUserFlag = false;
   }
 
   get isAuth():boolean{
-    this.username = this.authService.GetUserInfo();
-    return this.authService.isAuthenticated
+    this.isAuthenticated = this.authService.isAuthenticated;
+    if (this.isAuthenticated && !this.getUserFlag)
+    {
+      this.authService.GetUserInfo().subscribe(
+        (user: any) => {
+          console.log(user);
+          if (user[0]) {
+            console.log("Пользователь найден");
+            this.username = user[0].email
+          }
+        }
+      )
+      this.getUserFlag = true;
+      this.cdr.detectChanges();
+    }
+    return this.isAuthenticated ;
   }
 
-  onProfile() {
-    console.log("User profile");
+  ngAfterContentChecked(): void {
+    if (this.isAuthenticated) {
+    }
   }
 }

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CourseModule} from "./components/courses/course.module";
 import {CoreModule} from "./components/core/core.module";
 import {AuthModule} from "./components/auth/auth.module";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {AuthModule} from "./components/auth/auth.module";
     CourseModule,
     CoreModule,
     BrowserAnimationsModule,
-    AuthModule
+    AuthModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
