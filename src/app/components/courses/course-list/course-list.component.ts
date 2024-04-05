@@ -5,7 +5,7 @@ import {FilterPipe} from "../pipes/filter.pipe";
 import {CoursesService} from "../../../services/courses.service";
 import {NavigationExtras, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
-import {Observable} from "rxjs";
+import {debounceTime, distinctUntilChanged, filter, Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'app-course-list',
@@ -20,6 +20,7 @@ export class CourseListComponent implements OnInit {
   searchValue: string = "";
   show: boolean = true;
   page: number = 1;
+  searchSubject: Subject<string> = new Subject<string>();
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -76,8 +77,8 @@ export class CourseListComponent implements OnInit {
     console.log("ID курса " +course.id);
   }
 
-  public searchClick(): void{
-    this.coursesService.searchCourses(this.searchValue).subscribe(
+  public searchClick(searchValue: string): void{
+    this.coursesService.searchCourses(searchValue).subscribe(
       (result) => {
         this.data = result;
         this.cdr.detectChanges();
@@ -138,6 +139,24 @@ export class CourseListComponent implements OnInit {
     this.searchValue = "";
     this.show = true;
     this.getData();
+  }
+
+  public search(text: string): void {
+    this.searchSubject.next(this.searchValue as string);
+    this.searchSubject.pipe(
+      debounceTime(250),
+      filter((value) => !!value && value.length >= 3),
+      distinctUntilChanged(),
+    ).subscribe(searchValue => {
+      this.searchClick(searchValue);
+
+    });
+
+  }
+
+  searchClear() {
+    this.searchValue = ''
+    this.searchClick('');
   }
 
   protected readonly Output = Output;

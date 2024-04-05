@@ -5,8 +5,8 @@
 <div class="flex flex-column gap-2">
   <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="searchValue" />
-      <p-button icon="pi pi-search" styleClass="p-button-lg" (click)="searchClick()"></p-button>
+      <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="searchValue" (keyup)="search(searchValue)"/>
+      <p-button icon="pi pi-times" styleClass="p-button-lg" (click)="searchClear()"></p-button>
       <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
     </span>
   <div *ngIf="show; then thenBlock else elseBlock"></div>

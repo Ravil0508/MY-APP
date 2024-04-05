@@ -14,6 +14,8 @@ import {CardModule} from "primeng/card";
 import { NotFoundComponent } from './not-found/not-found.component';
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import { NotFindComponent } from './not-find/not-find.component';
+import { LoaderComponent } from './loader/loader.component';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 
 
@@ -26,17 +28,19 @@ import { NotFindComponent } from './not-find/not-find.component';
     BreadcrumbsComponent,
     SearchComponent,
     NotFoundComponent,
-    NotFindComponent
+    NotFindComponent,
+    LoaderComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ButtonModule,
-    CardModule,
-    InputTextModule,
-    CommonModule,
-    BreadcrumbModule
-  ],
-  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent, NotFindComponent]
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ButtonModule,
+        CardModule,
+        InputTextModule,
+        CommonModule,
+        BreadcrumbModule,
+        ProgressSpinnerModule
+    ],
+  exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent, NotFindComponent, LoaderComponent]
 })
 export class CoreModule { }
