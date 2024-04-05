@@ -1,1 +1,18 @@
-<p>author works!</p>
+<div>
+  <span class="p-fluid">
+    <p-autoComplete
+      [formControl]="controlForm"
+      [suggestions]="filteredAuthor"
+      (completeMethod)="filterAuthor($event)"
+      (onUnselect)="deleteAuthor(controlForm.value.id)"
+      (onSelect)="selectAuthor($event)"
+      field="name"
+      [dropdown]="true"
+      [multiple]="true"
+      [virtualScroll]="true"
+    >
+      <div *ngFor="let author of filteredAuthor$ | async"></div>
+    </p-autoComplete>
+  </span>
+  <div  *ngIf="controlForm.value.length <= 0 && userAction" style="color: red"> Обязательное поле </div>
+</div>

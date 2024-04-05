@@ -25,8 +25,8 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public loginAuth(){
-    this.authService.login(this.login, this.password).subscribe(
+  public loginAuth(myForm: any){
+    this.authService.login(myForm.value.login, myForm.value.password).subscribe(
       (user: any) => {
         if (user[0]) {
           console.log("Пользователь найден");
@@ -35,7 +35,7 @@ export class AuthComponent implements OnInit {
         }
       },
       (err) => {
-          console.log(err)
+        console.log(err);
       }
     );
   }

@@ -1,3 +1,4 @@
+<div class="classCard">
 <div class="card1 py-2">
   <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
 </div>
@@ -10,7 +11,7 @@
       <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
     </span>
   <div *ngIf="show; then thenBlock else elseBlock"></div>
-  <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" ></app-course>  <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse()"></p-button></ng-template>
+  <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" ></app-course>  <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузить еще' | uppercase" (click)="loadCourse()"></p-button></ng-template>
   <ng-template #elseBlock><app-not-found></app-not-found><p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" (onClick)="resetFilters()">Сбросить фильтры</p-button></ng-template>
 </div>
 <p-confirmDialog #cd [style]="{width: '50vw'}">
@@ -22,3 +23,4 @@
     <button type="button" pButton icon="pi pi-check" label="Да" (click)="cd.accept()" class="p-button p-button-danger"></button>
   </ng-template>
 </p-confirmDialog>
+</div>

@@ -5,7 +5,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from './pipes/filter.pipe';
@@ -19,6 +19,8 @@ import { DurationComponent } from './duration/duration.component';
 import {InputNumberModule} from "primeng/inputnumber";
 import {CalendarModule} from "primeng/calendar";
 import {CoreModule} from "../core/core.module";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 @NgModule({
   declarations: [
@@ -33,18 +35,21 @@ import {CoreModule} from "../core/core.module";
     AuthorComponent,
     DurationComponent
   ],
-    imports: [
-        CommonModule,
-        CardModule,
-        ButtonModule,
-        InputTextModule,
-        FormsModule,
-        ConfirmDialogModule,
-        BreadcrumbModule,
-        InputNumberModule,
-        CalendarModule,
-        CoreModule
-    ],
+  imports: [
+    CommonModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    FormsModule,
+    ConfirmDialogModule,
+    BreadcrumbModule,
+    InputNumberModule,
+    CalendarModule,
+    CoreModule,
+    ReactiveFormsModule,
+    AutoCompleteModule,
+    InputTextareaModule
+  ],
   exports: [CourseComponent, CourseListComponent, CoursesComponent, CourseAddComponent]
 })
 export class CourseModule {}

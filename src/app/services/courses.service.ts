@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Course } from 'src/app/model/course';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Author} from "../model/author";
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ export class CoursesService {
 
   public searchCourses(string: string): Observable<Course[]> {
     return this.httpClient.get<Array<Course>>(`${this.coursesUrl}/courseslist/?q=${string}`)
+  }
+
+  public getAuthors(): Observable<Array<Author>> {
+    return this.httpClient.get<Array<Author>>('/authors')
   }
 
   // public getList(): Course[]{

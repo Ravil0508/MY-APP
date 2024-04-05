@@ -7,7 +7,7 @@ import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter}
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DurationComponent implements OnInit {
-  @Input() public duration: number = 0;
+  @Input() public duration: any=[];
   @Output() durationChange = new EventEmitter<number>();
 
   constructor() { }
