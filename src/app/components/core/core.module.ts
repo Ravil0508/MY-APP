@@ -16,6 +16,7 @@ import {BreadcrumbModule} from "primeng/breadcrumb";
 import { NotFindComponent } from './not-find/not-find.component';
 import { LoaderComponent } from './loader/loader.component';
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -39,7 +40,8 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
         InputTextModule,
         CommonModule,
         BreadcrumbModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        FormsModule
     ],
   exports: [HeaderComponent, FooterComponent, LogoComponent, BreadcrumbsComponent, SearchComponent, NotFoundComponent, NotFindComponent, LoaderComponent]
 })

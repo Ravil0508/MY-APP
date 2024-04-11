@@ -21,8 +21,8 @@ export class CoursesService {
     return this.httpClient.get<Course[]>(`${this.coursesUrl}/courseslist`)
   }
 
-  public getCoursesList(page = 1, limit = 4): Observable<Course[]> {
-    return this.httpClient.get<Array<Course>>(`${this.coursesUrl}/courseslist?_page=${page}&_limit=${limit}`)
+  public getCoursesList(limit = 3): Observable<Course[]> {
+    return this.httpClient.get<Array<Course>>(`${this.coursesUrl}/courseslist?_page=0&_limit=${limit}`)
   }
 
   public createCourse(course: Course) {

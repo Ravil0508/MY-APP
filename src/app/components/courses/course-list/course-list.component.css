@@ -16,10 +16,7 @@
   align-items: center;
 }
 
-.classCard{
-  margin-right: 50px;
-  margin-top: 50px;
-  margin-left: 50px;
-  margin-bottom: 50px;
+app-course:not(:last-child) {
+  margin-bottom: 15px;
 }
 

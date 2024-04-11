@@ -1,5 +1,4 @@
-<div class="search">
-  <input type="text" class="p-inputtext-lg" placeholder="Поиск"/>
-  <p-button class="p-button-md p-button-primary" label="Поиск"></p-button>
-  <p-button class="p-button-md p-button-primary addbutton" label="Добавить курс" icon="pi-pi-check" iconPos="left"></p-button>
-</div>
+<span class="p-float-label">
+  <input class="p-inputtext-lg" id="float-input" type="text" [(ngModel)]="searchInput" (keyup)="onSearch()">
+  <label for="float-input">Search</label>
+</span>
