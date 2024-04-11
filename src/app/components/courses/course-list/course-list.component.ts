@@ -5,7 +5,18 @@ import {FilterPipe} from "../pipes/filter.pipe";
 import {CoursesService} from "../../../services/courses.service";
 import {NavigationExtras, Router} from "@angular/router";
 import {AuthService} from "../../../services/auth.service";
-import {Observable} from "rxjs";
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  filter, merge,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+  tap
+} from "rxjs";
+import {SearchComponent} from "../../core/search/search.component";
 
 @Component({
   selector: 'app-course-list',
@@ -14,12 +25,18 @@ import {Observable} from "rxjs";
   providers: [ FilterPipe,  ConfirmationService ]
 })
 export class CourseListComponent implements OnInit {
-  public courses$: Observable<Course[]> = this.coursesService.getCoursesList();
   public coursesMenu: MenuItem[] = [];
   public data: Course[] = [];
   searchValue: string = "";
   show: boolean = true;
   page: number = 1;
+
+  private refresh$: BehaviorSubject<number> = new BehaviorSubject<number>(3);
+  private search$: Subject<Course[]> = new Subject<Course[]>();
+  public courses$: Observable<Course[]> = merge(
+    this.refresh$.pipe(switchMap((limit) => this.coursesService.getCoursesList(limit))),
+    this.search$
+  );
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -27,7 +44,8 @@ export class CourseListComponent implements OnInit {
     private readonly coursesService: CoursesService,
     private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private searchComponent: SearchComponent
   ) {
 
   }
@@ -61,23 +79,25 @@ export class CourseListComponent implements OnInit {
     this.getData();
   }
 
-  public loadCourse(): void{
+  public loadCourse(currentLength: number): void{
     console.log("Загрузка курсов");
-    this.page += 1;
-    this.coursesService.getCoursesList(this.page).subscribe(
-      (result) => {
-        result.map((x) => {
-          this.data.push(x)
-        })
-      });
+    console.log('load more');
+    this.refresh$.next(currentLength + 3)
+    // this.page += 1;
+    // this.coursesService.getCoursesList(this.page).subscribe(
+    //   (result) => {
+    //     result.map((x) => {
+    //       this.data.push(x)
+    //     })
+    //   });
   }
 
   public selectCourse(course: Course): void{
     console.log("ID курса " +course.id);
   }
 
-  public searchClick(): void{
-    this.coursesService.searchCourses(this.searchValue).subscribe(
+  public searchClick(searchValue: string): void{
+    this.coursesService.searchCourses(searchValue).subscribe(
       (result) => {
         this.data = result;
         this.cdr.detectChanges();
@@ -134,10 +154,42 @@ export class CourseListComponent implements OnInit {
   }
 
   resetFilters() {
-    console.log('resetFilters');
-    this.searchValue = "";
-    this.show = true;
-    this.getData();
+    this.search('');
+  }
+
+  public search(text: string): void {
+    // this.searchSubject.next(this.searchValue as string);
+    // this.searchSubject.pipe(
+    //   debounceTime(250),
+    //   filter((value) => !!value && value.length >= 3),
+    //   distinctUntilChanged(),
+    // ).subscribe(searchValue => {
+    //   this.searchClick(searchValue);
+    //
+    // });
+    of(text).pipe(
+      debounceTime(250),
+      filter((value) => (!!value && value.length >= 3) || (value == '') ),
+      distinctUntilChanged(),
+      switchMap((value) => this.coursesService.searchCourses(value).pipe(
+        tap((courses) => {
+          if (courses.length === 0) {
+            this.show = false;
+          } else {
+            this.show = true;
+          }
+          if(text == '')
+            this.refresh$.next(3)
+          else
+            this.search$.next(courses)
+        })
+      ))
+    ).subscribe();
+  }
+
+  searchClear() {
+    this.searchValue = ''
+    this.search('');
   }
 
   protected readonly Output = Output;

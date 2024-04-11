@@ -4,15 +4,19 @@
 
 <div class="flex flex-column gap-2">
   <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input class="p-inputtext-lg" type="text" pInputText [(ngModel)]="searchValue" />
-      <p-button icon="pi pi-search" styleClass="p-button-lg" (click)="searchClick()"></p-button>
-      <p-button class="absolute right-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
+      <app-search (search)="search($event)"></app-search>
+      <p-button class="absolute right-0 absolute bottom-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
     </span>
-  <div *ngIf="show; then thenBlock else elseBlock"></div>
-  <ng-template #thenBlock><app-course  *ngFor="let course of data | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" ></app-course>  <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse()"></p-button></ng-template>
+  <div *ngIf="(courses$ | async) || [] as courses">
+    <div *ngIf="show; else elseBlock" class="flex flex-column gap-2">
+        <app-course  *ngFor="let course of courses | orderBy " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse($event)" [ngStyle]="{'margin-bottom': '15px'}"></app-course>
+        <div>
+          <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse(courses.length)"></p-button>
+        </div>
+    </div>
+  </div>
   <ng-template #elseBlock><app-not-found></app-not-found><p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" (onClick)="resetFilters()">Сбросить фильтры</p-button></ng-template>
-</div>
+  </div>
 <p-confirmDialog #cd [style]="{width: '50vw'}">
   <ng-template pTemplate="header" style="background-color: red; color: red; padding: 10px; text-align: center;">
     <div>Удаление курса</div>
