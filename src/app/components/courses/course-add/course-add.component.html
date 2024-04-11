@@ -1,31 +1,44 @@
-<div class="card py-2">
-  <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
-</div>
-<div class="course">
-  <p-card header="{{title}}" [style]="{ width: '500px' }" >
-    <div class="flex flex-column card-container m-2">
-      <div>Наименование*</div>
-      <input type="text" pInputText [(ngModel)]="course.title" />
-    </div>
-    <div class="flex flex-column card-container m-2">
-      <div>Описание*</div>
-      <textarea rows="5" cols="50" pInputTextarea [(ngModel)]="course.description"></textarea>
-    </div>
-    <div class="flex flex-column card-container m-2">
-      <div>Продолжительность*</div>
-      <app-duration [(duration)]="course.duration"></app-duration>
-    </div>
-    <div class="flex flex-column card-container m-2">
-      <div>Дата*</div>
-      <p-calendar [(ngModel)]="course.creationDate" [showIcon]="true" dateFormat="dd.mm.yy"></p-calendar>
-    </div>
-    <div class="flex flex-column card-container m-2">
-      <div>Авторы*</div>
-      <app-author></app-author>
-    </div>
-    <div class="flex card-container m-2  ">
-      <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()"></p-button>
-      <p-button label="Сохранить" (click)="save(course)"></p-button>
-    </div>
+<div class="classCard">
+  <div class="card py-2">
+    <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+  </div>
+  <p-card header="{{ titleHeader }}">
+    <form [formGroup]="courseAddForm"  (ngSubmit)="save()" >
+      <div class="grid p-fluid ">
+        <div class="flex flex-column card-container m-2 col-6">
+          <div>Наименование*</div>
+          <input type="text" pInputText  formControlName="title"/>
+          <small *ngIf="title.invalid && title.dirty" class="invalid-message p-error">
+            <p *ngIf="title.hasError('required')">Обязательное поле</p>
+            <p *ngIf="title.hasError('maxlength')">Мксимальная длина 50 символов</p>
+          </small>
+        </div>
+        <div class="flex flex-column card-container m-2 col-6">
+          <div>Описание*</div>
+          <textarea rows="5" cols="50" pInputTextarea formControlName="description" ></textarea>
+        </div>
+        <div class="flex flex-column card-container m-2 col-6">
+          <div>Продолжительность*</div>
+          <app-duration [duration]="duration"></app-duration>
+
+        </div>
+        <div class="flex flex-column card-container m-2 col-6">
+          <div>Дата*</div>
+          <p-calendar [showIcon]="true" dateFormat="dd/mm/yy"  formControlName="creationDate" ></p-calendar>
+        </div>
+        <div class="flex flex-column card-container m-2 col-6">
+          <div>Авторы*</div>
+          <app-author [controlForm]="author"></app-author>
+        </div>
+      </div>
+      <div class="flex ">
+        <div class="flex ">
+          <p-button label="Отмена" styleClass="p-button-secondary" (click)="cancel()"></p-button>
+        </div>
+        <div class="flex ml-3">
+          <p-button label="Сохранить"  type="submit" [disabled]="courseAddForm.invalid"></p-button>
+        </div>
+      </div>
+    </form>
   </p-card>
 </div>

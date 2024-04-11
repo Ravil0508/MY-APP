@@ -5,6 +5,7 @@ import {FilterPipe} from "../pipes/filter.pipe";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesService} from "../../../services/courses.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-course-add',
@@ -22,17 +23,45 @@ export class CourseAddComponent implements OnInit {
   };
 
   id = 0;
-  public title = "Добавление курса";
+  public titleHeader = "Добавление курса";
   public coursesMenu: MenuItem[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private courseService: CoursesService,
-              private cdr: ChangeDetectorRef
+              private cdr: ChangeDetectorRef,
+              private readonly fb: FormBuilder
   ) {
     console.log("constructor constructor");
     activatedRoute.params.subscribe(params => this.id = params['id']);
     console.log("constructor constructor", this.id);
+  }
+
+  public courseAddForm: FormGroup = this.fb.group({
+    title: ['', [Validators.required, Validators.maxLength(50)]],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    duration: [''],
+    creationDate: ['', [Validators.required]],
+    author: [[], [Validators.required]],
+  });
+
+  public get title(): FormControl {
+    return this.courseAddForm.get('title') as FormControl;
+  }
+  public get description(): FormControl {
+    return this.courseAddForm.get('description') as FormControl;
+  }
+
+  public get duration(): FormControl {
+    return this.courseAddForm.get('duration') as FormControl;
+  }
+
+  public get creationDate(): FormControl {
+    return this.courseAddForm.get('creationDate')  as FormControl;
+  }
+
+  public get author(): FormControl {
+    return this.courseAddForm.get('author')  as FormControl;
   }
 
   ngOnInit(): void {
@@ -40,16 +69,17 @@ export class CourseAddComponent implements OnInit {
       { label: ' Курсы', routerLink: '/courses', icon: 'pi pi-home' },
     ]
     if (this.id > 0) {
-      this.title = "Редактирование курса";
+      this.titleHeader = "Редактирование курса";
       this.courseService.getCourseById(this.id).subscribe(
         (course) => {
           this.coursesMenu.push({ label: course.title });
-          this.course = {
+          this.courseAddForm.patchValue({
             title: course.title,
-            creationDate: new Date(course.creationDate),
-            duration: course.duration,
             description: course.description,
-          }
+            duration: course.duration,
+            creationDate:  new Date(course.creationDate),
+            author: course.author
+          });
           this.cdr.detectChanges();
         });
     }
@@ -64,13 +94,14 @@ export class CourseAddComponent implements OnInit {
     this.router.navigate(['/courses']);
   }
 
-  save(course: Course){
+  save(){
     let courseForm = {
       id: this.id,
-      title: this.course.title,
-      creationDate: this.course.creationDate,
-      duration: this.course.duration,
-      description: this.course.description,
+      title: this.title.value,
+      creationDate: this.creationDate.value,
+      duration: this.duration.value,
+      description: this.description.value,
+      author: this.author.value
     }
 
     if (this.id > 0) {

@@ -126,6 +126,7 @@ export class CourseListComponent implements OnInit {
       (result) => {
         this.data = result;
       });
+    this.page = 1;
   }
 
   addCourse(){
