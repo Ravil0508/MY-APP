@@ -6,6 +6,9 @@ import {ConfirmationService, MenuItem} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CoursesService} from "../../../services/courses.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { State } from 'src/app/store';
+import {Store} from "@ngrx/store";
+import {addCourse, editCourse} from "../../../store/store/courses/actions/courses-actions.actions";
 
 @Component({
   selector: 'app-course-add',
@@ -30,7 +33,8 @@ export class CourseAddComponent implements OnInit {
               private router: Router,
               private courseService: CoursesService,
               private cdr: ChangeDetectorRef,
-              private readonly fb: FormBuilder
+              private readonly fb: FormBuilder,
+              private store: Store<State>,
   ) {
     console.log("constructor constructor");
     activatedRoute.params.subscribe(params => this.id = params['id']);
@@ -40,7 +44,7 @@ export class CourseAddComponent implements OnInit {
   public courseAddForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.maxLength(50)]],
     description: ['', [Validators.required, Validators.maxLength(500)]],
-    duration: [''],
+    duration: ['', [Validators.required]],
     creationDate: ['', [Validators.required]],
     author: [[], [Validators.required]],
   });
@@ -95,28 +99,16 @@ export class CourseAddComponent implements OnInit {
   }
 
   save(){
-    let courseForm = {
-      id: this.id,
-      title: this.title.value,
-      creationDate: this.creationDate.value,
-      duration: this.duration.value,
-      description: this.description.value,
-      author: this.author.value
-    }
+    let courseForm = this.courseAddForm.value;
+    courseForm.id = this.id;
+    console.log(this.author.value);
 
     if (this.id > 0) {
-      this.courseService.updateCourse(courseForm).subscribe(
-        (result) => {
-          console.log("Успешно изменили");
-        });
+      this.store.dispatch(editCourse({ course: courseForm }));
     }
     else {
-      this.courseService.createCourse(courseForm).subscribe(
-        (result) => {
-          console.log("Успешно добавили");
-        });
+      this.store.dispatch(addCourse({ course: courseForm }));
     }
-    this.router.navigate(['/courses']);
   }
 
 }

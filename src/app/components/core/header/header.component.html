@@ -1,7 +1,13 @@
 <header class="py-3 px-4 main-header">
   <div class="grid">
     <div class="col-9 "><app-logo></app-logo></div>
-    <div class="col-2 flex align-items-center" *ngIf="isAuth"><span> <i class="pi pi-user" ></i> {{username}}</span></div>
-    <div class="col-1 flex align-items-center" *ngIf="isAuth" ><p-button label="Выход" styleClass=" p-button-text" [link]="true" icon="pi pi-sign-out" (click)="onLogout()"></p-button></div>
+    <div *ngIf="isAuth; else null">
+      <div class="col-2 flex align-items-center" >
+        <div *ngIf="authUser$ | async as user">
+          <span><i class="pi pi-user " ></i> {{user[0]?.email}}</span>
+        </div>
+        <div class="col-1 flex align-items-center"><p-button label="Выход" styleClass=" p-button-text" icon="pi pi-sign-out" (click)="onLogout()"></p-button></div>
+      </div>
+    </div>
   </div>
 </header>

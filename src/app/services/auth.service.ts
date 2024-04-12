@@ -1,6 +1,7 @@
 import {  Injectable,  } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,11 @@ export class AuthService {
   public login(login: string, password: string): Observable<any> {
     console.log("Попытка вход в систему");
     console.log(login + " " + password);
-    return this.httpClient.get(`${this.usersUrl}?email=${login}&password=${password}`)
+    return this.httpClient.get(`${this.usersUrl}?email=${login}&password=${password}`).pipe(
+      tap((user:any) => {
+        localStorage.setItem('Token', user[0].token);
+      }),
+    )
   }
 
 

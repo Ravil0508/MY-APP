@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit ,Output} from '@angular/core';
 import {Router} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import {Observable} from "rxjs";
+import {State} from "../../store";
+import {select, Store} from "@ngrx/store";
+import {selectUser} from "../../store/store/auth/selectors/auth-selectors.selectors";
+import {Login} from "../../store/store/auth/actions/auth-actions.actions";
 
 @Component({
   selector: 'app-auth',
@@ -13,6 +18,7 @@ export class AuthComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private store: Store<State>,
     )
   {
 
@@ -26,17 +32,9 @@ export class AuthComponent implements OnInit {
   }
 
   public loginAuth(myForm: any){
-    this.authService.login(myForm.value.login, myForm.value.password).subscribe(
-      (user: any) => {
-        if (user[0]) {
-          console.log("Пользователь найден");
-          localStorage.setItem('Token', user[0].token);
-          this.router.navigate(['/courses']);
-        }
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    let login  = myForm.value.login;
+    let password = myForm.value.password;
+
+    this.store.dispatch(Login({ login, password }));
   }
 }
