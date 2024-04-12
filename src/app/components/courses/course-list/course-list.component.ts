@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Output} from '@angular/core';
 import { Course} from "../../../model/course";
 import {ConfirmationService, MenuItem} from "primeng/api";
 import {FilterPipe} from "../pipes/filter.pipe";
@@ -17,11 +17,16 @@ import {
   tap
 } from "rxjs";
 import {SearchComponent} from "../../core/search/search.component";
+import {selectCourses, selectCoursesCount} from "../../../store/store/courses/selectors/courses-selectors.selectors";
+import {Store} from "@ngrx/store";
+import { State } from 'src/app/store';
+import {getCourses, deleteCourse, searchCourses} from "../../../store/store/courses/actions/courses-actions.actions";
 
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ FilterPipe,  ConfirmationService ]
 })
 export class CourseListComponent implements OnInit {
@@ -33,19 +38,12 @@ export class CourseListComponent implements OnInit {
 
   private refresh$: BehaviorSubject<number> = new BehaviorSubject<number>(3);
   private search$: Subject<Course[]> = new Subject<Course[]>();
-  public courses$: Observable<Course[]> = merge(
-    this.refresh$.pipe(switchMap((limit) => this.coursesService.getCoursesList(limit))),
-    this.search$
-  );
+  public courses$: Observable<Course[]> = this.store.select(selectCourses);
 
   constructor(
     private confirmationService: ConfirmationService,
-    private filter: FilterPipe,
-    private readonly coursesService: CoursesService,
-    private authService: AuthService,
     private router: Router,
-    private cdr: ChangeDetectorRef,
-    private searchComponent: SearchComponent
+    private store: Store<State>
   ) {
 
   }
@@ -76,57 +74,28 @@ export class CourseListComponent implements OnInit {
     this.coursesMenu = [
       { label: ' Курсы', routerLink: '/courses', icon: 'pi pi-home' },
     ];
-    this.getData();
+    this.store.dispatch(getCourses({}))
   }
 
-  public loadCourse(currentLength: number): void{
+  public loadCourse(): void{
     console.log("Загрузка курсов");
-    console.log('load more');
-    this.refresh$.next(currentLength + 3)
-    // this.page += 1;
-    // this.coursesService.getCoursesList(this.page).subscribe(
-    //   (result) => {
-    //     result.map((x) => {
-    //       this.data.push(x)
-    //     })
-    //   });
+    let limit = 0;
+    this.store.select(selectCoursesCount).subscribe(
+      (limitCount: number) => {
+        limit = limitCount + 3;
+      }
+
+    )
+    console.log("limit после  " + limit);
+    this.store.dispatch(getCourses({ limit }));
   }
 
   public selectCourse(course: Course): void{
     console.log("ID курса " +course.id);
   }
 
-  public searchClick(searchValue: string): void{
-    this.coursesService.searchCourses(searchValue).subscribe(
-      (result) => {
-        this.data = result;
-        this.cdr.detectChanges();
-      },
-      (error) => { console.log(error)},
-      () => {
-        if(this.data.length == 0) {
-          this.show = false;
-        } else {
-          this.show = true;
-        }
-      });
-  }
-
   public editCourse(course: Course): void{
-    const extras: NavigationExtras = {
-      queryParams: {
-        id: course.id
-      },
-    };
     this.router.navigate(['/courses/', course.id]);
-  }
-
-  getData() {
-    this.coursesService.getCoursesList().subscribe(
-      (result) => {
-        this.data = result;
-      });
-    this.page = 1;
   }
 
   addCourse(){
@@ -135,12 +104,8 @@ export class CourseListComponent implements OnInit {
 
   public deleteCourse(course: Course): void{
     console.log("ID курса " + course.id);
-    this.coursesService.deleteCourse(course.id!).subscribe(
-      (result) => {
-        console.log("Успешно удалили");
-        this.getData();
-        this.page = 1;
-      });
+    let courseId = course.id!;
+    this.store.dispatch(deleteCourse({ courseId }))
   }
 
   confirmDeleteCourse(course: Course) {
@@ -172,19 +137,7 @@ export class CourseListComponent implements OnInit {
       debounceTime(250),
       filter((value) => (!!value && value.length >= 3) || (value == '') ),
       distinctUntilChanged(),
-      switchMap((value) => this.coursesService.searchCourses(value).pipe(
-        tap((courses) => {
-          if (courses.length === 0) {
-            this.show = false;
-          } else {
-            this.show = true;
-          }
-          if(text == '')
-            this.refresh$.next(3)
-          else
-            this.search$.next(courses)
-        })
-      ))
+      tap((value) => this.store.dispatch(searchCourses({ input: value.toLowerCase() })))
     ).subscribe();
   }
 

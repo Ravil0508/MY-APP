@@ -1,6 +1,6 @@
 <div class="logon">
   <p-card header="Вход" [style]="{ width: '400px' }"  >
-    <form #myForm="ngForm" class="p-fluid flex flex-column" (ngSubmit)="loginAuth(myForm)">
+    <form #myForm="ngForm" class="p-fluid flex flex-column" (ngSubmit)="loginAuth(myForm)" >
       <div class="field">
         <span>Email*</span>
         <input
@@ -12,24 +12,30 @@
           required
           pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
         />
+        <small *ngIf="myForm.form.controls['login']?.invalid && myForm.form.controls['login'].dirty" class="invalid-message p-error">
+          <p *ngIf="myForm.form.controls['login'].hasError('required')">Обязательное поле</p>
+          <p *ngIf="myForm.form.controls['login'].hasError('pattern')">Введите почту</p>
+        </small>
       </div>
       <div class="field">
         <span>Пароль*</span>
         <input
-          type="field"
+          type="password"
           pInputText
           ngModel name="password"
           placeholder="Ваш пароль"
           style="margin: 10px 0"
           required
         />
+        <small *ngIf="myForm.form.controls['password']?.invalid && myForm.form.controls['password'].dirty" class="invalid-message p-error">
+          <p *ngIf="myForm.form.controls['password'].hasError('required')">Обязательное поле</p>
+        </small>
       </div>
 
-      <div class="passRecovery">
-        <a href="#"> Забыли пароль? </a>
-        <button pButton type="submit" label="Войти" [disabled]="myForm.invalid"></button>
+      <div class="flex justify-content-between">
+        <div href="#"> Забыли пароль? </div>
+        <div> <button pButton type="submit" label="Войти" [disabled]="myForm.invalid"></button></div>
       </div>
     </form>
   </p-card>
 </div>
-
