@@ -81,6 +81,19 @@ describe('CourseAddComponent', () => {
   });
 
   it('should submit form', (done) => {
+    TestBed.configureTestingModule({
+      declarations: [CourseAddComponent, DurationPipe, DurationComponent, AuthorComponent],
+      imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
+        { path: 'courses', component: CourseAddComponent }
+      ]), CalendarModule, BreadcrumbModule, CardModule],
+      providers: [
+        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
+        { provide: CourseAddComponent, useValue: {} },
+        { provide: CoursesService, useValue: { getCourseById: () => of({}) } },
+        provideMockStore({ initialState })
+      ]
+    })
+      .compileComponents();
     const form = fixture.debugElement.query(By.css('form'));
     spyOn(component, 'save');
     component.courseAddForm.patchValue({ title: 'title', description: 'desc', duration: 60, creationDate: new Date('2023-10-10'), author: [] });
