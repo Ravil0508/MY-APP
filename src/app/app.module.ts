@@ -18,6 +18,7 @@ import { CoursesEffectsEffects } from './store/store/courses/effects/courses-eff
 import { AuthEffectsEffects } from './store/store/auth/effects/auth-effects.effects';
 import {environment} from "../environments/environment";
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {InputNumberModule} from "primeng/inputnumber";
 
 
 
@@ -26,6 +27,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     AppComponent,
   ],
   imports: [
+    InputNumberModule,
     BrowserModule,
     AppRoutingModule,
     CourseModule,

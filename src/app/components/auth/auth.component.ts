@@ -16,7 +16,6 @@ export class AuthComponent implements OnInit {
   @Output() public loginEvent: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private store: Store<State>,
     )

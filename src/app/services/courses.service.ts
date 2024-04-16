@@ -22,7 +22,7 @@ export class CoursesService {
   }
 
   public getCoursesList(limit = 3): Observable<Course[]> {
-    return this.httpClient.get<Array<Course>>(`${this.coursesUrl}/courseslist?_page=0&_limit=${limit}`)
+    return this.httpClient.get<Array<Course>>(`${this.coursesUrl}/courseslist?_page=1&_limit=${limit}`)
   }
 
   public createCourse(course: Course) {

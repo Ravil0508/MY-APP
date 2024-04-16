@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesComponent } from './courses.component';
+import {CourseComponent} from "./course/course.component";
+import {CourseListComponent} from "./course-list/course-list.component";
+import {ActionsSubject, ReducerManager, ReducerManagerDispatcher, StateObservable, Store} from "@ngrx/store";
+import {InjectionToken} from "@angular/core";
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -8,7 +12,8 @@ describe('CoursesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CoursesComponent ]
+      declarations: [ CoursesComponent, CourseComponent , CourseListComponent],
+      providers: [Store, StateObservable, ActionsSubject, ReducerManager, ReducerManagerDispatcher, InjectionToken ]
     })
     .compileComponents();
   });
