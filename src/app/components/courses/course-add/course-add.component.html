@@ -7,7 +7,7 @@
       <div class="grid p-fluid ">
         <div class="flex flex-column card-container m-2 col-6 title">
           <div>Наименование*</div>
-          <input type="text" pInputText  formControlName="title" data-testid="title"/>
+          <input type="text" name="title" pInputText  formControlName="title" data-testid="title"/>
           <small *ngIf="title.invalid && title.dirty" class="invalid-message p-error">
             <p *ngIf="title.hasError('required')">Обязательное поле</p>
             <p *ngIf="title.hasError('maxlength')">Мксимальная длина 50 символов</p>
@@ -24,7 +24,7 @@
         </div>
         <div class="flex flex-column card-container m-2 col-6">
           <div>Дата*</div>
-          <p-calendar [showIcon]="true" dateFormat="dd/mm/yy"  formControlName="creationDate" data-testid="creationDate"></p-calendar>
+          <p-calendar [showIcon]="true" name="creationDate" dateFormat="dd/mm/yy"  formControlName="creationDate" data-testid="creationDate"></p-calendar>
         </div>
         <div class="flex flex-column card-container m-2 col-6">
           <div>Авторы*</div>

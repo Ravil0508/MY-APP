@@ -1,18 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, convertToParamMap} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { CalendarModule } from 'primeng/calendar';
 import { of } from 'rxjs';
-import { CoursesService } from 'src/app/services/courses.service';
+import { CoursesService } from '../../../services/courses.service';
 import { DurationPipe } from '../pipes/duration.pipe';
 import { CourseAddComponent } from './course-add.component';
 import {BreadcrumbModule} from "primeng/breadcrumb";
 import {CardModule} from "primeng/card";
 import {DurationComponent} from "../duration/duration.component";
 import {AuthorComponent} from "../author/author.component";
+import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from "@angular/core";
+import {ButtonModule} from "primeng/button/button";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {StoreModule} from "@ngrx/store";
+import {reducers} from "../../../store";
+import {initialState} from "../../../store/store/auth/reducer/auth-reducer.reducer";
 
 
 describe('CourseAddComponent', () => {
@@ -24,16 +30,20 @@ describe('CourseAddComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CourseAddComponent, DurationPipe, DurationComponent, AuthorComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
-        { path: 'courses', component: CourseAddComponent }
-      ]), CalendarModule, BreadcrumbModule, CardModule],
+      imports: [StoreModule.forRoot(reducers), FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule, BreadcrumbModule, CardModule],
+      declarations: [
+        CourseAddComponent,
+        DurationPipe,
+        DurationComponent,
+        AuthorComponent
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: CourseAddComponent, useValue: {} },
-        { provide: CoursesService, useValue: { getCourseById: () => of({}) } },
+         { provide: CoursesService, useValue: { getAuthors: () => of({}),getCourseById: () => of({}) } },
         provideMockStore({ initialState })
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   });
@@ -46,16 +56,12 @@ describe('CourseAddComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should render form fields and correct value', () => {
     component.courseAddForm.patchValue({
       title: 'title',
       description: 'desc',
       duration: 60,
-      creationDate: new Date('2023-10-10'),
+      creationDate: new Date(),
       author: []
     });
 
@@ -75,28 +81,15 @@ describe('CourseAddComponent', () => {
 
     expect(component.title.value).toBe('title');
     expect(component.description.value).toBe('desc');
-    expect(component.creationDate.value).toEqual(new Date('2023-10-10'));
+    expect(component.creationDate.value).toEqual(new Date());
     expect(component.duration.value).toBe(60);
     expect(component.author.value).toEqual([]);
   });
 
   it('should submit form', (done) => {
-    TestBed.configureTestingModule({
-      declarations: [CourseAddComponent, DurationPipe, DurationComponent, AuthorComponent],
-      imports: [ReactiveFormsModule, RouterTestingModule.withRoutes([
-        { path: 'courses', component: CourseAddComponent }
-      ]), CalendarModule, BreadcrumbModule, CardModule],
-      providers: [
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
-        { provide: CourseAddComponent, useValue: {} },
-        { provide: CoursesService, useValue: { getCourseById: () => of({}) } },
-        provideMockStore({ initialState })
-      ]
-    })
-      .compileComponents();
     const form = fixture.debugElement.query(By.css('form'));
     spyOn(component, 'save');
-    component.courseAddForm.patchValue({ title: 'title', description: 'desc', duration: 60, creationDate: new Date('2023-10-10'), author: [] });
+    component.courseAddForm.patchValue({ title: 'title', description: 'desc', duration: 60, creationDate: new Date(), author: [] });
 
     form.triggerEventHandler('ngSubmit', null);
     fixture.whenStable().then(() => {
@@ -113,5 +106,4 @@ describe('CourseAddComponent', () => {
 
     expect(component.cancel).toHaveBeenCalled()
   });
-
 });

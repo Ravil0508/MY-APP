@@ -52,4 +52,4 @@ import {InputTextareaModule} from "primeng/inputtextarea";
   ],
   exports: [CourseComponent, CourseListComponent, CoursesComponent, CourseAddComponent]
 })
-export class CourseModule {}
+export class CoursesModule {}

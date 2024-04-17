@@ -84,6 +84,7 @@ export class CourseAddComponent implements OnInit {
             creationDate:  new Date(course.creationDate),
             author: course.author
           });
+          console.log('this.courseAddForm',this.courseAddForm);
           this.cdr.detectChanges();
         });
     }
@@ -109,6 +110,7 @@ export class CourseAddComponent implements OnInit {
     else {
       this.store.dispatch(addCourse({ course: courseForm }));
     }
+    console.log('this.courseAddForm',this.courseAddForm);
   }
 
 }

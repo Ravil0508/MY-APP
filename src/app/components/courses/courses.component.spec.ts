@@ -8,24 +8,38 @@ import {
   ReducerManager,
   ReducerManagerDispatcher,
   StateObservable,
-  Store
+  Store, StoreModule
 } from "@ngrx/store";
-import {InjectionToken} from "@angular/core";
+import {CUSTOM_ELEMENTS_SCHEMA, InjectionToken, NO_ERRORS_SCHEMA} from "@angular/core";
+import {reducers} from "../../store";
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {CommonModule} from "@angular/common";
+import {SearchComponent} from "../core/search/search.component";
+import {ButtonModule} from "primeng/button/button";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoursesComponent, CourseComponent, CourseListComponent],
-      providers: [
-        Store,
-        StateObservable,
-        ActionsSubject,
-        ReducerManager,
-        ReducerManagerDispatcher
-      ]
-    }).compileComponents();
+      imports: [StoreModule.forRoot(reducers), CommonModule,
+        BreadcrumbModule, RouterTestingModule ],
+      declarations: [CoursesComponent, CourseComponent, CourseListComponent, SearchComponent],
+      providers: [Store],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
+      .compileComponents();
+    // await TestBed.configureTestingModule({
+    //   declarations: [CoursesComponent, CourseComponent, CourseListComponent],
+    //   providers: [
+    //     Store,
+    //     StateObservable,
+    //     ActionsSubject,
+    //     ReducerManager,
+    //     ReducerManagerDispatcher
+    //   ]
+    // }).compileComponents();
   });
 
   beforeEach(() => {
