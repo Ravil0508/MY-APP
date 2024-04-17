@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./breadcrumbs.component.css']
 })
 export class BreadcrumbsComponent implements OnInit {
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor() {
   }
 
   ngOnInit() {

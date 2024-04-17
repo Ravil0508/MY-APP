@@ -1,4 +1,5 @@
 import {Component, OnInit, ChangeDetectionStrategy, Input, Output, EventEmitter} from '@angular/core';
+import {DurationPipe} from "../pipes/duration.pipe";
 
 @Component({
   selector: 'app-duration',

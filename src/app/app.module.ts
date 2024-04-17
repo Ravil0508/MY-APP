@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {CourseModule} from "./components/courses/course.module";
+import {CoursesModule} from "./components/courses/courses.module";
 import {CoreModule} from "./components/core/core.module";
 import {AuthModule} from "./components/auth/auth.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -18,6 +18,7 @@ import { CoursesEffectsEffects } from './store/store/courses/effects/courses-eff
 import { AuthEffectsEffects } from './store/store/auth/effects/auth-effects.effects';
 import {environment} from "../environments/environment";
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {InputNumberModule} from "primeng/inputnumber";
 
 
 
@@ -26,9 +27,10 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     AppComponent,
   ],
   imports: [
+    InputNumberModule,
     BrowserModule,
     AppRoutingModule,
-    CourseModule,
+    CoursesModule,
     CoreModule,
     BrowserAnimationsModule,
     AuthModule,
