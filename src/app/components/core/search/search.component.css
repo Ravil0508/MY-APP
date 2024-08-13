@@ -20,3 +20,24 @@
 .addbutton {
   float: right;
 }
+
+:host ::ng-deep .input-container {
+  position: relative;
+  display: inline-block;
+}
+
+:host ::ng-deep .custom-input {
+  padding-left: 30px;
+  border-radius: 0;
+  width: 100%;
+}
+
+:host ::ng-deep .search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  pointer-events: none;
+}
+

@@ -111,9 +111,8 @@ export class CourseListComponent implements OnInit {
   confirmDeleteCourse(course: Course) {
     console.log("удаление");
     this.confirmationService.confirm({
-      message: 'Вы действительно хотите удалить этот курс?',
+      message: 'Вы уверены, что хотите удалить курс: "' + course.title + '"?',
       header: 'Удаление курса',
-      icon: 'pi pi-exclamation-triangle',
       accept: () => this.deleteCourse(course),
     });
     console.log("удаление2");

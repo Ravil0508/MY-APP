@@ -1,24 +1,41 @@
-<div class="card1 py-2">
-  <p-breadcrumb [model]="coursesMenu" ></p-breadcrumb>
+<div class="py-2">
+  <p-breadcrumb [model]="coursesMenu"></p-breadcrumb>
 </div>
 
-<div class="flex flex-column gap-2">
+<div class="flex flex-column gap-2 section-spacing">
   <span class="p-input-icon-left">
-      <app-search (search)="search($event)"></app-search>
-      <p-button class="absolute right-0 absolute bottom-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus " (click)="addCourse()"></p-button>
-    </span>
-  <div *ngIf="(courses$ | async) || [] as courses; else elseBlock" class="flex flex-column gap-2" >
-    <app-course  *ngFor="let course of courses " [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse(course)" ></app-course>
-    <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" [label]="'Загрузка курсов' | uppercase" (click)="loadCourse()"></p-button>
+    <app-search (search)="search($event)"></app-search>
+    <p-button class="custom-button absolute right-0 absolute bottom-0" label="Добавить курс" styleClass="p-button-lg" icon="pi pi-plus" (click)="addCourse()"></p-button>
+  </span>
+
+  <div *ngIf="(courses$ | async) as courses; else elseBlockContent" class="flex flex-column gap-2">
+    <ng-container *ngIf="courses.length > 0; else elseBlockContent">
+      <app-course *ngFor="let course of courses" [course]="course" (editEvent)="editCourse(course)" (deleteEvent)="confirmDeleteCourse(course)"></app-course>
+      <div class="button-container">
+        <button class="button" (click)="loadCourse()">Загрузить еще</button>
+      </div>
+    </ng-container>
   </div>
-  <ng-template #elseBlock><app-not-found></app-not-found><p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" (onClick)="resetFilters()">Сбросить фильтры</p-button></ng-template>
-  </div>
-<p-confirmDialog #cd [style]="{width: '50vw'}">
-  <ng-template pTemplate="header" style="background-color: red; color: red; padding: 10px; text-align: center;">
-    <div>Удаление курса</div>
+
+  <ng-template #elseBlockContent>
+    <div class="white-background-container">
+    <div class="white-background">
+    <app-not-found></app-not-found>
+    <p-button class="w-12 p-button-secondary p-button-lg flex align-items-center justify-content-center" (click)="resetFilters()">Сбросить фильтры</p-button>
+    </div>
+    </div>
   </ng-template>
-  <ng-template pTemplate="footer" style="background-color: lightblue; text-align: center;">
-    <button type="button" pButton icon="pi pi-times" label="Нет" (click)="cd.reject()" class="p-button p-button-success"></button>
-    <button type="button" pButton icon="pi pi-check" label="Да" (click)="cd.accept()" class="p-button p-button-danger"></button>
+</div>
+
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="flex-grow: 1; text-align: left; font-weight: bold;">Удалить курс?</div>
+    </div>
+    <i class="pi pi-times" style="cursor: pointer;" (click)="cd.reject()"></i>
+  </ng-template>
+  <ng-template pTemplate="footer" style="background-color: lightblue; display: flex; justify-content: center;">
+    <p-button (onClick)="cd.reject()" label="Отмена" [outlined]="true"></p-button>
+    <p-button (onClick)="cd.accept()" label="Удалить" severity="danger"></p-button>
   </ng-template>
 </p-confirmDialog>

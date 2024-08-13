@@ -20,3 +20,81 @@ app-course:not(:last-child) {
   margin-bottom: 15px;
 }
 
+:host ::ng-deep .p-breadcrumb {
+  background-color: white;
+  border-radius: 10px;
+}
+
+:host ::ng-deep .p-breadcrumb .p-menuitem-icon {
+  margin-right: 8px;
+}
+
+:host ::ng-deep .custom-button .p-button {
+  border-radius: 1;
+}
+
+:host ::ng-deep .custom-button .pi {
+  margin-right: 8px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 2px solid #333;
+  border-radius: 3px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: min(10%);
+  display: inline-block;
+}
+
+.white-background-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 25%;
+}
+
+.white-background {
+  background-color: white;
+  width: 100%;
+  height: 50%;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto 0;
+}
+
+.cancel-link {
+  color: blue;
+}
+
+.footer-template {
+  background-color: lightblue;
+  text-align: center;
+}
+
+.header-template {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
