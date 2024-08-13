@@ -21,6 +21,7 @@ import {CalendarModule} from "primeng/calendar";
 import {CoreModule} from "../core/core.module";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
     CoreModule,
     ReactiveFormsModule,
     AutoCompleteModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ToastModule
   ],
   exports: [CourseComponent, CourseListComponent, CoursesComponent, CourseAddComponent]
 })

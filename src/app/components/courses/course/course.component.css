@@ -42,3 +42,27 @@
 .p-card-body   {
   background: #EFF6FF;
 }
+
+.col-10 {
+  flex: 10;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 30px;
+}
+
+.pencil-icon {
+  color: #81D4FA;
+}
+
+.trash-icon {
+  color: #FF0000;
+}
+
+.star-icon {
+  font-size: 1rem;
+  color: #ffae00;
+  margin-left: 10px;
+}

@@ -3,6 +3,13 @@
   background: #F8FAFC;
   box-shadow: 0px 20px 25px -5px #0000001A;
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0% 5%;
+  height: 50px;
+
 }
 span {
   color: rgb(0, 0, 0);
@@ -13,4 +20,25 @@ span {
   letter-spacing: 0em;
   text-align: left;
 
+}
+
+.logout-link {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
+
+.pi-sign-out {
+  margin-right: 8px;
+  margin-left: 24px;
+  font-weight: bold;
+}
+
+.user-icon {
+  margin-right: 8px;
+  font-weight: bold;
 }
